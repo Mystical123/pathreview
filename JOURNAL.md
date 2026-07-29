@@ -26,7 +26,7 @@ Reproduced by hitting the `/health` endpoint directly on the running local app (
 3. Observe `503` response with `"redis":"unhealthy"`.
 4. Check the server logs for the `redis_health_check_failed` error line confirming the `AttributeError` on `settings.redis_host`.
 
-**PLAN.md link:** [TODO: add once PLAN.md is created]
+**PLAN.md link:** https://github.com/Mystical123/pathreview/blob/fix/155-health-check-redis-host/PLAN.md
 
 **Walkthrough video (recommended):** [not recorded]
 
