@@ -14,3 +14,21 @@ The `/health` endpoint is supposed to check whether Redis is reachable, but it c
 **Setup confirmation:** [x] App runs locally at localhost:5173
 
 **Cohort ledger:** [x] Issue added to cohort ledger
+
+## Week 8 — Reproduction & solution planning
+
+**Reproduction commit link:** [TODO: fill in after committing this file]
+
+**Reproduction summary:**
+Reproduced by hitting the `/health` endpoint directly on the running local app (`curl http://localhost:8000/health`) instead of going through the frontend. The response came back as `503 Service Unavailable` with `"redis":"unhealthy"` in the body, and the `make run` server logs showed the actual error: `redis_health_check_failed error="'Settings' object has no attribute 'redis_host'"`. This confirms the bug: `core/config.py` only defines `redis_url` on `Settings`, but `api/routes/health.py` tries to read `settings.redis_host` / `settings.redis_port`, which don't exist, so the Redis check always throws an `AttributeError` (caught, so it doesn't crash the server, but it always reports Redis as unhealthy regardless of Redis's real state). Steps to reproduce:
+1. Start the app locally (`docker compose up -d`, `make run`).
+2. Run `curl http://localhost:8000/health`.
+3. Observe `503` response with `"redis":"unhealthy"`.
+4. Check the server logs for the `redis_health_check_failed` error line confirming the `AttributeError` on `settings.redis_host`.
+
+**PLAN.md link:** [TODO: add once PLAN.md is created]
+
+**Walkthrough video (recommended):** [not recorded]
+
+**Blockers or open questions:**
+None so far.
