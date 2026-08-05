@@ -65,4 +65,4 @@ Added `tests/unit/test_health.py` with two tests: one confirms `/health` reports
 
 Verified scoped to my changed files: `ruff`, `black`, and `mypy` are all clean on `api/routes/health.py` and `tests/unit/test_health.py`, and both new tests in `test_health.py` pass. I also confirmed via a `mypy` before/after diff that this fix resolves the two `attr-defined` errors on `redis_host`/`redis_port` with no new errors introduced. The full repo (`make check`/`make test-unit` run with no path scoping) surfaces pre-existing lint and test failures from other unclaimed issues elsewhere in this 66+ issue seeded codebase — confirmed unrelated by checking that none of the failing test files import `health.py` or `core/config.py`.
 
-**Draft PR feedback received from:** none
+**Draft PR feedback received from:** Iesha Khabra
