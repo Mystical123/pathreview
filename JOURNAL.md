@@ -40,19 +40,13 @@ None so far.
 ### Check-in 1 (mid-week)
 
 **Current progress:**
-[What have you implemented so far? Which sub-tasks from PLAN.md are done?]
-I have just updated JOURNAL.md and made a PLAN.md understanding what the issue is and where to go about it.
- I have also gone through which files need to be changed that I previously mentioned for last weeks PR and I have gone through each file seeing where the main issue is. 
+I have just updated JOURNAL.md and made a PLAN.md understanding what the issue is and where to go about it. I have also gone through which files need to be changed that I previously mentioned for last weeks PR and I have gone through each file seeing where the main issue is.
 
 **Next steps:**
-[What are you working on for the rest of the week?]
-This week im going to begin on implementing a real fix towards the codebase and modifiying the code to try to fix the issue. 
-Then I will attempt to make my test cases and confirm my code is working and not just on my local machine. The Final step would be to document everything 
-and submit a final PR for review. 
+This week im going to begin on implementing a real fix towards the codebase and modifiying the code to try to fix the issue. Then I will attempt to make my test cases and confirm my code is working and not just on my local machine. The Final step would be to document everything and submit a final PR for review.
 
 **Blockers:**
-[Anything slowing you down? Or leave blank.]
-Nothing slowing me down right now but I am just going to implement each step of the plan and go from there. 
+Nothing slowing me down right now but I am just going to implement each step of the plan and go from there.
 ---
 
 ### Check-in 2 (end of week)
