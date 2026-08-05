@@ -57,16 +57,18 @@ Nothing slowing me down right now but I am just going to implement each step of 
 
 ### Check-in 2 (end of week)
 
-**PR link:** [link to your submitted pull request]
+**PR link:** [TODO: add after PR is opened]
 
-**Branch:** [the branch name you worked on, e.g. `fix/123-short-description`]
+**Branch:** fix/155-health-check-redis-host
 
 **What you built:**
-[1–3 sentences summarizing what your fix does and how it works]
+Fixed `api/routes/health.py` so the Redis check builds its client from `settings.redis_url` (via `redis.Redis.from_url(...)`) instead of the nonexistent `settings.redis_host` / `settings.redis_port` fields. `/health` now correctly reports Redis as `"healthy"` or `"unhealthy"` based on its real connection state, instead of always failing with an `AttributeError`.
 
 **Tests added or updated:**
-[Which test files did you touch? What do they cover?]
+Added `tests/unit/test_health.py` with two tests: one confirms `/health` reports `"redis":"healthy"` when Redis is reachable (and that `redis.Redis.from_url` is called with the real `redis_url` config), and one confirms it reports `"redis":"unhealthy"` with a clean `503` (not an `AttributeError`) when Redis is unreachable.
 
-**Self-review confirmation:** [ ] make check passes  [ ] make test-unit passes
+**Self-review confirmation:** [x] make test-unit passes (for changed files — see note)  [ ] make check passes
 
-**Draft PR feedback received from:** [name or Slack handle, or "none"]
+Note: `tests/unit/test_health.py` passes, and `ruff`/`black` are clean on both changed files (`api/routes/health.py`, `tests/unit/test_health.py`). Full-repo `make check` and `make test-unit` currently fail due to ~184 lint errors and 53 unrelated test failures that are pre-existing in the repo (other unclaimed issues), not caused by this change — verified by confirming none of the failing test files import `health.py` or `core/config.py`, and by diffing `mypy` output before/after: the two `attr-defined` errors on `redis_host`/`redis_port` are resolved by this fix, with no new errors introduced.
+
+**Draft PR feedback received from:** none
