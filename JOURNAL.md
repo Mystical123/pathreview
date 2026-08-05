@@ -51,7 +51,7 @@ Nothing slowing me down right now but I am just going to implement each step of 
 
 ### Check-in 2 (end of week)
 
-**PR link:** https://github.com/ascherj/pathreview/pull/934 (currently draft — pending peer/mentor feedback before marking ready for review)
+**PR link:** https://github.com/ascherj/pathreview/pull/934
 
 **Branch:** fix/155-health-check-redis-host
 
