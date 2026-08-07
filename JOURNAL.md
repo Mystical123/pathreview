@@ -66,3 +66,34 @@ Added `tests/unit/test_health.py` with two tests: one confirms `/health` reports
 Verified scoped to my changed files: `ruff`, `black`, and `mypy` are all clean on `api/routes/health.py` and `tests/unit/test_health.py`, and both new tests in `test_health.py` pass. I also confirmed via a `mypy` before/after diff that this fix resolves the two `attr-defined` errors on `redis_host`/`redis_port` with no new errors introduced. The full repo (`make check`/`make test-unit` run with no path scoping) surfaces pre-existing lint and test failures from other unclaimed issues elsewhere in this 66+ issue seeded codebase — confirmed unrelated by checking that none of the failing test files import `health.py` or `core/config.py`.
 
 **Draft PR feedback received from:** Iesha Khabra
+
+## Week 10 — Iteration & reflection
+
+### Reviewer feedback
+
+**Feedback received:** [ ] Yes  [x] No — still awaiting review
+
+**Summary of feedback:**
+No maintainer/reviewer comments have come in on [PR #934](https://github.com/ascherj/pathreview/pull/934) as of this writing (reviewer feedback isn't a feature this term, per the course note). Separately, before marking the PR ready for review, I did get a quick draft look from a classmate, Iesha Khabra, which is documented in Week 9's Check-in 2.
+
+**How you responded:**
+N/A — no reviewer feedback has arrived to respond to.
+
+---
+
+### Reflection
+
+**What was harder than you expected?**
+The actual code fix was small — one line, really — but getting there took longer than I expected because of things unrelated to the bug itself. I lost real time to a broken Docker CLI symlink on my machine before I could even reproduce the issue, and then getting my one-line change through the project's pre-commit hooks (`ruff`, `black`, `mypy`) meant fixing several pre-existing type/lint issues in the same file just so the hook would pass at all. I didn't expect "fix a one-line bug" to require touching type annotations and import ordering too.
+
+**What did you learn about working in a large codebase?**
+I learned that you can't just fix the symptom you see — you have to check whether your assumption holds everywhere else in the codebase. Before deciding how to fix the Redis config bug, I grepped the whole repo for other places that used `redis_url` to confirm it really was the single source of truth, instead of just fixing `health.py` in isolation and hoping nothing else depended on the broken fields. I also learned to be deliberate about what goes into a commit — I kept an unrelated `package-lock.json` change out of my PR entirely, because a shared codebase punishes unscoped diffs a lot more than a solo project does.
+
+**How did AI tools help — and where did they fall short?**
+AI was most useful for things I couldn't have moved fast on alone: explaining unfamiliar tooling errors (the Docker CLI symlink issue), reading dense `mypy`/log output and telling me exactly which line mattered, and helping me structure `PLAN.md` and this journal so I wasn't starting from a blank page. It fell short anywhere I actually needed to *observe* something myself — no amount of AI explanation replaced actually stopping and starting the Redis container myself and watching `/health` flip between healthy and unhealthy. It also couldn't make the judgment calls for me — deciding between Option A and B in my plan, or deciding not to fix the unrelated Postgres bug I noticed along the way, were choices I had to make and justify myself.
+
+**What would you do differently if you started over?**
+I'd get my peer review earlier and more substantively — I only got a quick look from a classmate near the end of the week, and I think a review earlier in my planning stage (before I committed to Option A) would have been more useful than one right before submission. I'd also make sure my local environment was fully working before locking in an issue, so I wasn't debugging Docker setup problems in the middle of what should've been reproduction/fix work.
+
+**What are you most proud of from this module?**
+I'm most proud that I didn't stop at "the code looks right" — I actually simulated Redis going down and coming back up locally to prove my fix handled both states, and I cross-checked with a `mypy` before/after diff to confirm the exact type errors matching the issue were resolved. That felt like real verification, not just hoping the fix worked.
